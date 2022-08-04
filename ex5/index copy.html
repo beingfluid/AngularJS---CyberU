@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AngularJS - CyberU </title>
+    <link rel="stylesheet" href="style.css" />
+     <!-- Load AngularJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+        <div ng-app="httpApp">
+        <div ng-controller="httpAppController">
+            <input type="text" ng-model="search" />
+            <ul>
+                <li ng-repeat="u in users | filter : search | orderBy : 'name'">
+                    {{ u.name }} - {{ u.email }}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+   
+    <script >
+        var app = angular.module( "httpApp", [] );
+
+app.controller('httpAppController', httpAppController);
+
+function httpAppController( $scope,$http ) {
+   
+
+    $http({
+        method: 'GET',
+        url: 'https://jsonplaceholder.typicode.com/users'
+    }).then(function successCallback(result) {
+            console.log(result.data);
+            $scope.users=result.data;
+    } );
+}
+    </script>
+</body>
+</html>
+
+
+    

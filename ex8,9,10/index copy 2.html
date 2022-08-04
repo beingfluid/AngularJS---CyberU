@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AngularJS - CyberU </title>
+    <style type="text/css">
+        .error{
+            color: red;
+        }
+    </style>
+     <!-- Load AngularJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+        <div ng-app="customDirective" >
+            <div ng-custom-hover="#f00">Hover Over Me</div>
+        </div>
+    
+
+   
+    <script >
+        var app = angular.module( "customDirective", [] );
+
+        app.directive('ngCustomHover', ngCustomHover);
+
+        function ngCustomHover( ) {
+            return {
+                link:function(scope, element, attrs) {
+                    var originalColor=element.css("color");
+                    element
+                    .on("mouseenter", function() { 
+                        var selectedColor=element.attr("ng-custom-hover");
+                        element.css("color", selectedColor);
+                     })
+                     .on("mouseleave", function() { 
+                        element.css("color", originalColor);
+                     });
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+
+    

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AngularJS - CyberU </title>
+    <style type="text/css">
+        div{
+            padding: 5px;
+        }
+        .highlight{
+            background-color: #ccc;
+        }
+    </style>
+     <!-- Load AngularJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+        <div ng-app="userListApp" ng-controller="userListController">
+           <div class="highlight"  ngc-custom-user user="current" lbl="*">
+                <!-- <strong>{{current.name}} </strong><br />
+                {{current.email}}<br />
+                {{current.phone}}<br />
+                <a href="{{current.website}}">{{current.website}}</a> -->
+            </div>
+           
+            <div ng-repeat="u in users" ngc-custom-user user="u">
+                <!-- <strong>{{u.name}} </strong><br />
+                {{u.email}}<br />
+                {{u.phone}}<br />
+                <a href="{{u.website}}">{{u.website}}</a> -->
+            </div>
+        </div>
+    
+
+   
+    <script >
+        var userListApp = angular.module( "userListApp", [] );
+
+        userListApp.controller('userListController', userListController);
+
+        function userListController( $scope, $http) {
+            $http({
+                method: 'GET',
+                url: 'https://jsonplaceholder.typicode.com/users'
+            }).then(function(result) {
+                    console.log(result.data);
+                    $scope.users=result.data;
+            } );
+
+            $scope.current= {
+                "name": 'Vishal Ingle', 
+                "phone": '+91-8999450094', 
+                "email": 'vishalingle25793@gmail.com', 
+                "website": 'http://beingfluid.in'
+            };
+        }
+
+        userListApp.directive("ngcCustomUser",ngcCustomUser);
+
+        function ngcCustomUser(){
+           return {
+            scope:{u:"=user", label:"@lbl"},
+            template:"<strong>{{label}} {{u.name}} </strong><br />"+
+                "{{u.email}}<br />"+
+                "{{u.phone}}<br />"+
+                "<a href=\"{{u.website}}\">{{u.website}}</a>"
+           };
+        }
+
+        
+
+    </script>
+</body>
+</html>
+
+
+    

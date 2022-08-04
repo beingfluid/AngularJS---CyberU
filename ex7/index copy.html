@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AngularJS - CyberU </title>
+    <style type="text/css">
+        .error{
+            color: red;
+        }
+    </style>
+     <!-- Load AngularJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    
+        <div ng-app="validationAndBinding" ng-controller="usersAppController">
+            <form name="myForm">
+                <div ng-hide="editedUser == undefined">
+            <input type="text" name="userName" ng-model="editedUser.name" required />
+            <span class="error" ng-show="myForm.userName.$error.required">Required!</span>
+            <button ng-hide="myForm.userName.$error.required" ng-click="save(editedUser)">Save</button>
+            </div>
+            <ul>
+                <li ng-repeat="u in users">
+                    <a href="#" ng-click="edit(u)">
+                        {{u.name}}
+                    </a>
+                </li>
+            </ul>
+            </form>
+        </div>
+    
+
+   
+    <script >
+        var app = angular.module( "validationAndBinding", [] );
+
+app.controller('usersAppController', usersAppController);
+
+function usersAppController( $scope,$http ) {
+   
+
+    $http({
+        method: 'GET',
+        url: 'https://jsonplaceholder.typicode.com/users'
+    }).then(function(result) {
+            console.log(result.data);
+            $scope.users=result.data;
+    } );
+
+    $scope.editedUser=undefined;
+
+    $scope.save=function(u){
+  $scope.currentUser.name=u.name;
+   $scope.editedUser=undefined;
+
+    };
+
+    $scope.edit=function(u){
+ $scope.currentUser=u;
+$scope.editedUser={name:""};
+  $scope.editedUser.name=u.name;
+
+    };
+   
+}
+    </script>
+</body>
+</html>
+
+
+    
